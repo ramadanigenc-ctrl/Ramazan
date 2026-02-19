@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Ramadan 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #faf7f2;
+            color: #5d4037;
+            padding: 20px 16px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Stili i bukur për titujt dhe header-at */
+        h1, h2, h3, .card-header, .title h1, .stat-value, .location-badge, .next-badge, .info-badge, .prayer-time-item strong, .farz-item .name, .sunnah-item .name, .rakat-label, .dhikr-name, .field label, .footer {
+            font-family: 'Amiri', serif;
+        }
+
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(250, 247, 242, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 32px;
+            padding: 32px 24px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(179, 94, 58, 0.2);
+            border: 1px solid #f5e1d4;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            color: #b35e3a;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            font-family: 'Amiri', serif;
+        }
+
+        .login-card p {
+            color: #8b6250;
+            margin-bottom: 24px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-input {
+            width: 100%;
+            background: #fffaf5;
+            border: 2px solid #ecd9c9;
+            border-radius: 50px;
+            padding: 16px 24px;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-input:focus {
+            border-color: #e6b17e;
+        }
+
+        .login-btn {
+            background: #e6b17e;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 32px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(230,177,126,0.3);
+            transition: 0.1s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .title {
+            background: #e6b17e;
+            padding: 8px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(230,177,126,0.4);
+        }
+
+        .title h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0 #b35e3a;
+        }
+
+        .user-greeting {
+            background: #fcf3ea;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: #b35e3a;
+            border: 1px solid #f5d7b3;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .day-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 40px;
+            border: 1px solid #f0dccc;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .day-arrow {
+            background: #e6b17e;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(230, 177, 126, 0.4);
+            line-height: 1;
+        }
+
+        .day-arrow:active {
+            transform: scale(0.95);
+        }
+
+        .day-display {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #7b5e4b;
+            min-width: 90px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+
+        .card {
+            background: white;
+            border-radius: 32px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px rgba(229, 198, 170, 0.15);
+            border: 1px solid #f5e1d4;
+            max-width: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 500;
+            color: #b95b36;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f5e1d4;
+            padding-bottom: 12px;
+            font-family: 'Amiri', serif;
+        }
+
+        .card-header span {
+            font-size: 2rem;
+        }
+
+        /* Stilet për oraret e namazeve */
+        .location-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: nowrap;
+            gap: 8px;
+        }
+        .location-badge {
+            background: #fefaf5;
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid #f5dccf;
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 60%;
+        }
+        .next-badge {
+            background: #e6b17e;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            margin-bottom: 20px;
+        }
+        .info-badge {
+            background: #fcf3ea;
+            padding: 8px 12px;
+            border-radius: 40px;
+            border: 1px solid #f5d7b3;
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+            font-size: 0.9rem;
+        }
+        .prayer-times-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .prayer-time-item {
+            background: #fefaf5;
+            border-radius: 30px;
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid #f5dccf;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .prayer-time-item strong {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Amiri', serif;
+        }
+
+        /* Farzet në dy kolona */
+        .farz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 8px;
+        }
+        .farz-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #fefaf5;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 1px solid #f5dccf;
+        }
+        .farz-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: #e6b17e;
+        }
+        .farz-item .name {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Sunetet në një kolonë */
+        .sunnah-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .sunnah-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fefaf5;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 1px solid #f5dccf;
+        }
+        .sunnah-item .control {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        .sunnah-item .name {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+        .sunnah-choice {
+            display: flex;
+            gap: 8px;
+        }
+        .choice-btn {
+            background: transparent;
+            border: 2px solid #ecd9c9;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #5d4037;
+            cursor: pointer;
+            transition: 0.1s;
+            min-width: 50px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .choice-btn.active-yes {
+            background: #e6b17e;
+            border-color: #e6b17e;
+            color: white;
+        }
+        .choice-btn.active-no {
+            background: #d0b7a8;
+            border-color: #b3927e;
+            color: white;
+        }
+
+        /* Namazet vullnetare */
+        .rakat-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 16px 0;
+            background: #fef9f4;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: 1px solid #f5d7b3;
+        }
+        .rakat-label {
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        .rakat-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .rakat-btn {
+            background: #e6b17e;
+            border: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 42px;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(230, 177, 126, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        .rakat-num {
+            font-size: 1.5rem;
+            font-weight: 500;
+            min-width: 40px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+
+        /* Dhikr */
+        .dhikr-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+        .dhikr-item {
+            background: #fefaf5;
+            border-radius: 60px;
+            padding: 8px 16px 8px 22px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #f5dccf;
+        }
+        .dhikr-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            max-width: 240px;
+        }
+        .dhikr-counter {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .dhikr-counter span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 45px;
+            text-align: center;
+            font-family: 'Amiri', serif;
+        }
+        .dhikr-plus {
+            background: #e6b17e;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(230,177,126,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Kur'ani */
+        .page-input-group {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            background: #fef7f0;
+            padding: 16px;
+            border-radius: 50px;
+        }
+        .page-input-group label {
+            font-weight: 500;
+        }
+        .page-input-group input {
+            background: white;
+            border: 1px solid #e6cebc;
+            border-radius: 40px;
+            padding: 12px 18px;
+            width: 90px;
+            text-align: center;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .progress-bg {
+            background: #edd7c5;
+            height: 16px;
+            border-radius: 30px;
+            width: 100%;
+            margin: 16px 0 6px;
+        }
+        .progress-fill {
+            background: #e6b17e;
+            height: 16px;
+            border-radius: 30px;
+            width: 0%;
+        }
+
+        .field {
+            margin: 22px 0;
+        }
+        .field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #8b6250;
+            font-size: 1.1rem;
+        }
+        .field input, .field textarea {
+            width: 100%;
+            background: #fffaf5;
+            border: 1px solid #ecd9c9;
+            border-radius: 30px;
+            padding: 16px 20px;
+            font-size: 1rem;
+            resize: vertical;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .save-btn {
+            background: #e6b17e;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 32px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgba(230,177,126,0.3);
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.1s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .save-btn:active {
+            transform: scale(0.98);
+        }
+
+        .footer {
+            text-align: center;
+            color: #aa8a76;
+            font-size: 1rem;
+            margin: 30px 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginOverlay" class="login-overlay">
+        <div class="login-card">
+            <h2>🌙 Ramadan 2026</h2>
+            <p>Shkruaj emrin tënd për të vazhduar</p>
+            <input type="text" id="usernameInput" class="login-input" placeholder="Emri yt" autocomplete="off">
+            <button class="login-btn" onclick="saveUsername()">Fillo</button>
+        </div>
+    </div>
+
+    <div class="app" id="mainApp" style="display: none;">
+        <div class="header">
+            <div class="title">
+                <h1>Ramadan 2026</h1>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <span class="user-greeting" id="userGreeting"></span>
+                <div class="day-control">
+                    <button class="day-arrow" onclick="changeDay(-1)">‹</button>
+                    <span class="day-display" id="currentDay">Dita 1/30</span>
+                    <button class="day-arrow" onclick="changeDay(1)">›</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KARTA E NAMAZEVE -->
+        <div class="card">
+            <div class="card-header"><span>🕋</span> Koha e namazeve</div>
+            <div class="location-row">
+                <div class="location-badge" id="locationDisplay">
+                    <span>📍</span> Duke marrë vendndodhjen...
+                </div>
+                <div class="next-badge" id="nextPrayerText">
+                    Sabah për 2h 15m
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-badge">
+                    🌅 Lindja: <strong id="sunriseTime">--:--</strong>
+                </div>
+                <div class="info-badge">
+                    📅 <span id="hijriDate">Duke marrë...</span>
+                </div>
+            </div>
+            <div class="prayer-times-grid" id="prayerTimesContainer"></div>
+        </div>
+
+        <!-- NAMAZET FARZ -->
+        <div class="card">
+            <div class="card-header"><span>🕋</span> Namazet farz</div>
+            <div class="farz-grid">
+                <div class="farz-item">
+                    <input type="checkbox" id="farzSabah" class="farz-checkbox">
+                    <span class="name">Sabah</span>
+                </div>
+                <div class="farz-item">
+                    <input type="checkbox" id="farzDreka" class="farz-checkbox">
+                    <span class="name">Dreka</span>
+                </div>
+                <div class="farz-item">
+                    <input type="checkbox" id="farzIkindia" class="farz-checkbox">
+                    <span class="name">Ikindia</span>
+                </div>
+                <div class="farz-item">
+                    <input type="checkbox" id="farzAksham" class="farz-checkbox">
+                    <span class="name">Aksham</span>
+                </div>
+                <div class="farz-item">
+                    <input type="checkbox" id="farzJacia" class="farz-checkbox">
+                    <span class="name">Jacia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUNETET -->
+        <div class="card">
+            <div class="card-header"><span>🕌</span> Sunetet</div>
+            <div class="sunnah-list">
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahSabah">
+                        <button class="choice-btn" data-choice="yes">✓</button>
+                        <button class="choice-btn" data-choice="no">✗</button>
+                    </div>
+                    <span class="name">Sabah (2 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahDreka">
+                        <button class="choice-btn" data-choice="yes">✓</button>
+                        <button class="choice-btn" data-choice="no">✗</button>
+                    </div>
+                    <span class="name">Dreka (4+2 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahIkindia">
+                        <button class="choice-btn" data-choice="yes">✓</button>
+                        <button class="choice-btn" data-choice="no">✗</button>
+                    </div>
+                    <span class="name">Ikindia (4 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahAksham">
+                        <button class="choice-btn" data-choice="yes">✓</button>
+                        <button class="choice-btn" data-choice="no">✗</button>
+                    </div>
+                    <span class="name">Aksham (2 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahJacia">
+                        <button class="choice-btn" data-choice="yes">✓</button>
+                        <button class="choice-btn" data-choice="no">✗</button>
+                    </div>
+                    <span class="name">Jacia (4+2 rekate)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAMAZET VULLNETARE (pa ikonë) -->
+        <div class="card">
+            <div class="card-header">Namazet vullnetare</div>
+            <div class="rakat-selector">
+                <span class="rakat-label">Duha</span>
+                <div class="rakat-controls">
+                    <button class="rakat-btn" onclick="changeRakat('duha', -1)">−</button>
+                    <span class="rakat-num" id="duhaRakat">0</span>
+                    <button class="rakat-btn" onclick="changeRakat('duha', 1)">+</button>
+                </div>
+            </div>
+            <div class="rakat-selector">
+                <span class="rakat-label">Nafile</span>
+                <div class="rakat-controls">
+                    <button class="rakat-btn" onclick="changeRakat('nafile', -1)">−</button>
+                    <span class="rakat-num" id="nafileRakat">0</span>
+                    <button class="rakat-btn" onclick="changeRakat('nafile', 1)">+</button>
+                </div>
+            </div>
+            <div class="rakat-selector">
+                <span class="rakat-label">Tehexhud-i nates</span>
+                <div class="rakat-controls">
+                    <button class="rakat-btn" onclick="changeRakat('nate', -1)">−</button>
+                    <span class="rakat-num" id="nateRakat">0</span>
+                    <button class="rakat-btn" onclick="changeRakat('nate', 1)">+</button>
+                </div>
+            </div>
+            <div class="rakat-selector">
+                <span class="rakat-label">Teravite</span>
+                <div class="rakat-controls">
+                    <button class="rakat-btn" onclick="changeRakat('teravi', -1)">−</button>
+                    <span class="rakat-num" id="teraviRakat">0</span>
+                    <button class="rakat-btn" onclick="changeRakat('teravi', 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- LUTJET (DHIKR) -->
+        <div class="card">
+            <div class="card-header"><span>📿</span> Lutjet (Dhikr)</div>
+            <div class="dhikr-list" id="dhikrContainer"></div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="resetAllDhikr()">Rivendos të gjitha në 0</button>
+        </div>
+
+        <!-- KUR'ANI -->
+        <div class="card">
+            <div class="card-header"><span>📖</span> Kur'ani (faqe)</div>
+            <div class="page-input-group">
+                <label>Nga:</label>
+                <input type="number" id="fromPage" value="1" min="1" max="604">
+                <label>në:</label>
+                <input type="number" id="toPage" value="1" min="1" max="604">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight:500;">Sot: <span id="todayPages">0</span> faqe</span>
+                <button class="save-btn" style="width:auto; padding:12px 24px;" onclick="calculatePages()">Ruaj</button>
+            </div>
+            <div style="margin-top: 24px;">
+                <span>Gjithsej në muaj: <span id="totalPagesRead">0</span> / 604 faqe</span>
+                <div class="progress-bg"><div class="progress-fill" id="quranProgress" style="width:0%"></div></div>
+            </div>
+        </div>
+
+        <!-- DUA, SADAKA, REFLEKTIMI -->
+        <div class="card">
+            <div class="card-header"><span>🤲</span> Dua dhe reflektim</div>
+            <div class="field">
+                <label>Dua (lutja e ditës)</label>
+                <textarea id="dua" rows="2" placeholder="O Allah, më jep forcë dhe durim..."></textarea>
+            </div>
+            <div class="field">
+                <label>Sadaka (€)</label>
+                <input type="number" id="sadaka" value="0" min="0" step="0.5" placeholder="Shuma e dhënë">
+            </div>
+            <div class="field">
+                <label>Reflektimi ditor</label>
+                <textarea id="reflection" rows="3" placeholder="Si u ndjeva sot? Çfarë mund të përmirësoj?"></textarea>
+            </div>
+            <button class="save-btn" onclick="saveCurrentDay()">Ruaj të dhënat</button>
+        </div>
+
+        <div class="footer">🌙 Çdo ditë është mundësi</div>
+    </div>
+
+    <script>
+        const dhikrList = [
+            "Subhanallah (100x)",
+            "Elhamdulilah (100x)",
+            "Allahu Ekber (100x)",
+            "Estagfirullah (100x)",
+            "La ilahe illallah, Muhamedun Resulullah",
+            "SubhanAllahi ve bi hamdihi",
+            "SubhanAllahi ve bi hamdihi, SubhanAllahil Adhim",
+            "HasbijAllahu ve ni’mel vekil",
+            "La hawle ve la kuvvete illa billah",
+            "Salavatet",
+            "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir",
+            "Estagfirullah ve etubu ilejh",
+            "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)",
+            "Ihlas 13her",
+            "La ilahe illa ente subhaneke inni kuntu mine dhalimin",
+            "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim"
+        ];
+
+        let currentDay = 1;
+        let userName = '';
+        let userCoords = null;
+        let prayerTimes = [];
+        let sunriseTimeStr = '--:--';
+        let dayData = {};
+
+        window.onload = function() {
+            renderDhikr();
+            setupSunnahChoices();
+            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
+            const savedUser = localStorage.getItem('ramadanUser');
+            if (savedUser) {
+                userName = savedUser;
+                document.getElementById('userGreeting').innerText = `👤 ${userName}`;
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                loadAllData();
+                getLocation();
+            }
+            setInterval(updatePrayerCard, 60000);
+        };
+
+        function saveUsername() {
+            const input = document.getElementById('usernameInput');
+            const name = input.value.trim();
+            if (name) {
+                userName = name;
+                document.getElementById('userGreeting').innerText = `👤 ${name}`;
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                localStorage.setItem('ramadanUser', name);
+                loadAllData();
+                getLocation();
+            } else {
+                alert('Ju lutem shkruani emrin tuaj');
+            }
+        }
+
+        function loadAllData() {
+            const stored = localStorage.getItem(`ramadanData_${userName}`);
+            if (stored) {
+                dayData = JSON.parse(stored);
+            } else {
+                dayData = {};
+            }
+            loadDayData(currentDay);
+            updateQuranTotal();
+        }
+
+        function saveAllData() {
+            localStorage.setItem(`ramadanData_${userName}`, JSON.stringify(dayData));
+        }
+
+        function loadDayData(day) {
+            const data = dayData[day] || createEmptyDayData();
+            // Farz
+            document.getElementById('farzSabah').checked = data.farz.sabah;
+            document.getElementById('farzDreka').checked = data.farz.dreka;
+            document.getElementById('farzIkindia').checked = data.farz.ikindia;
+            document.getElementById('farzAksham').checked = data.farz.aksham;
+            document.getElementById('farzJacia').checked = data.farz.jacia;
+
+            // Sunnah
+            setSunnahChoice('sunnahSabah', data.sunnah.sabah);
+            setSunnahChoice('sunnahDreka', data.sunnah.dreka);
+            setSunnahChoice('sunnahIkindia', data.sunnah.ikindia);
+            setSunnahChoice('sunnahAksham', data.sunnah.aksham);
+            setSunnahChoice('sunnahJacia', data.sunnah.jacia);
+
+            // Rekate vullnetare
+            document.getElementById('duhaRakat').innerText = data.voluntary.duha;
+            document.getElementById('nafileRakat').innerText = data.voluntary.nafile;
+            document.getElementById('nateRakat').innerText = data.voluntary.nate;
+            document.getElementById('teraviRakat').innerText = data.voluntary.teravi;
+
+            // Dhikr
+            for (let i = 0; i < dhikrList.length; i++) {
+                const span = document.getElementById(`dhikr-${i}`);
+                if (span) span.innerText = data.dhikr[i];
+            }
+
+            // Kur'an
+            document.getElementById('fromPage').value = data.quran.fromPage;
+            document.getElementById('toPage').value = data.quran.toPage;
+            calculatePages();
+
+            // Fushat e reja
+            document.getElementById('dua').value = data.duaReflection.dua || '';
+            document.getElementById('sadaka').value = data.duaReflection.sadaka || 0;
+            document.getElementById('reflection').value = data.duaReflection.reflection || '';
+        }
+
+        function createEmptyDayData() {
+            return {
+                farz: { sabah: false, dreka: false, ikindia: false, aksham: false, jacia: false },
+                sunnah: { sabah: 'no', dreka: 'no', ikindia: 'no', aksham: 'no', jacia: 'no' },
+                voluntary: { duha: 0, nafile: 0, nate: 0, teravi: 0 },
+                dhikr: new Array(16).fill(0),
+                quran: { fromPage: 1, toPage: 1 },
+                duaReflection: { dua: '', sadaka: 0, reflection: '' }
+            };
+        }
+
+        function setSunnahChoice(containerId, value) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const btns = container.querySelectorAll('.choice-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('active-yes', 'active-no');
+                if (btn.dataset.choice === value) {
+                    btn.classList.add(value === 'yes' ? 'active-yes' : 'active-no');
+                }
+            });
+        }
+
+        function saveCurrentDay() {
+            const data = {
+                farz: {
+                    sabah: document.getElementById('farzSabah').checked,
+                    dreka: document.getElementById('farzDreka').checked,
+                    ikindia: document.getElementById('farzIkindia').checked,
+                    aksham: document.getElementById('farzAksham').checked,
+                    jacia: document.getElementById('farzJacia').checked
+                },
+                sunnah: {
+                    sabah: getSunnahChoice('sunnahSabah'),
+                    dreka: getSunnahChoice('sunnahDreka'),
+                    ikindia: getSunnahChoice('sunnahIkindia'),
+                    aksham: getSunnahChoice('sunnahAksham'),
+                    jacia: getSunnahChoice('sunnahJacia')
+                },
+                voluntary: {
+                    duha: parseInt(document.getElementById('duhaRakat').innerText) || 0,
+                    nafile: parseInt(document.getElementById('nafileRakat').innerText) || 0,
+                    nate: parseInt(document.getElementById('nateRakat').innerText) || 0,
+                    teravi: parseInt(document.getElementById('teraviRakat').innerText) || 0
+                },
+                dhikr: [],
+                quran: {
+                    fromPage: parseInt(document.getElementById('fromPage').value) || 1,
+                    toPage: parseInt(document.getElementById('toPage').value) || 1
+                },
+                duaReflection: {
+                    dua: document.getElementById('dua').value,
+                    sadaka: parseFloat(document.getElementById('sadaka').value) || 0,
+                    reflection: document.getElementById('reflection').value
+                }
+            };
+
+            for (let i = 0; i < dhikrList.length; i++) {
+                const span = document.getElementById(`dhikr-${i}`);
+                data.dhikr.push(parseInt(span.innerText) || 0);
+            }
+
+            dayData[currentDay] = data;
+            saveAllData();
+            updateQuranTotal();
+            alert('Të dhënat u ruajtën për ditën ' + currentDay);
+        }
+
+        function getSunnahChoice(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return 'no';
+            const activeYes = container.querySelector('.choice-btn.active-yes');
+            return activeYes ? 'yes' : 'no';
+        }
+
+        function updateQuranTotal() {
+            let total = 0;
+            for (let day = 1; day <= 30; day++) {
+                const d = dayData[day];
+                if (d && d.quran && d.quran.toPage && d.quran.fromPage) {
+                    const pages = d.quran.toPage - d.quran.fromPage;
+                    if (pages > 0) total += pages;
+                }
+            }
+            document.getElementById('totalPagesRead').innerText = total;
+            const percent = Math.min(100, (total / 604) * 100);
+            document.getElementById('quranProgress').style.width = percent + '%';
+        }
+
+        function changeDay(delta) {
+            currentDay += delta;
+            if (currentDay < 1) currentDay = 1;
+            if (currentDay > 30) currentDay = 30;
+            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
+            loadDayData(currentDay);
+        }
+
+        function changeRakat(which, delta) {
+            const el = document.getElementById(which + 'Rakat');
+            let val = parseInt(el.innerText) || 0;
+            val += delta;
+            if (val < 0) val = 0;
+            if (which === 'duha' && val > 24) val = 24;
+            if (which === 'teravi' && val > 100) val = 100;
+            if (which === 'nate' && val > 20) val = 20;
+            if (which === 'nafile' && val > 100) val = 100;
+            el.innerText = val;
+        }
+
+        function calculatePages() {
+            const from = parseInt(document.getElementById('fromPage').value) || 0;
+            const to = parseInt(document.getElementById('toPage').value) || 0;
+            if (to >= from) {
+                document.getElementById('todayPages').innerText = to - from;
+            } else {
+                alert('Faqja "deri" duhet të jetë më e madhe se "nga"');
+            }
+        }
+
+        function renderDhikr() {
+            const container = document.getElementById('dhikrContainer');
+            container.innerHTML = '';
+            dhikrList.forEach((text, index) => {
+                const item = document.createElement('div');
+                item.className = 'dhikr-item';
+                item.innerHTML = `
+                    <span class="dhikr-name">${index+1}. ${text}</span>
+                    <div class="dhikr-counter">
+                        <span id="dhikr-${index}">0</span>
+                        <button class="dhikr-plus" onclick="increaseDhikr(${index})">+</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function increaseDhikr(index) {
+            const span = document.getElementById(`dhikr-${index}`);
+            let val = parseInt(span.innerText) || 0;
+            span.innerText = val + 1;
+        }
+
+        function resetAllDhikr() {
+            for (let i = 0; i < dhikrList.length; i++) {
+                const span = document.getElementById(`dhikr-${i}`);
+                if (span) span.innerText = '0';
+            }
+        }
+
+        function setupSunnahChoices() {
+            const choiceContainers = document.querySelectorAll('.sunnah-choice');
+            choiceContainers.forEach(container => {
+                const btns = container.querySelectorAll('.choice-btn');
+                btns.forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        btns.forEach(b => {
+                            b.classList.remove('active-yes', 'active-no');
+                        });
+                        if (this.dataset.choice === 'yes') {
+                            this.classList.add('active-yes');
+                        } else {
+                            this.classList.add('active-no');
+                        }
+                    });
+                });
+            });
+        }
+
+        // Funksionet e lokacionit dhe orareve
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById('locationDisplay').innerHTML = '📍 Geolokacioni nuk mbështetet';
+                useFallbackTimes();
+            }
+        }
+
+        function showPosition(position) {
+            userCoords = {
+                lat: position.coords.latitude,
+                lon: position.coords.longitude
+            };
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userCoords.lat}&lon=${userCoords.lon}`)
+                .then(response => response.json())
+                .then(data => {
+                    const city = data.address.city || data.address.town || data.address.village || 'vendndodhja juaj';
+                    document.getElementById('locationDisplay').innerHTML = `📍 ${city}`;
+                })
+                .catch(() => {
+                    document.getElementById('locationDisplay').innerHTML = '📍 Vendndodhja juaj';
+                });
+
+            fetch(`https://api.aladhan.com/v1/timings?latitude=${userCoords.lat}&longitude=${userCoords.lon}&method=13`)
+                .then(response => response.json())
+                .then(data => {
+                    const timings = data.data.timings;
+                    const hijri = data.data.date.hijri;
+                    
+                    let day = hijri.day;
+                    if (day === '2') day = '1';
+                    const formattedDay = day.padStart(2, '0');
+                    const month = 'Ramazan';
+                    const year = hijri.year;
+                    const hijriDateStr = `${formattedDay} ${month} ${year}`;
+                    
+                    prayerTimes = [
+                        { name: 'Sabah', time: timings.Fajr },
+                        { name: 'Dreka', time: timings.Dhuhr },
+                        { name: 'Ikindia', time: timings.Asr },
+                        { name: 'Aksham', time: timings.Maghrib },
+                        { name: 'Jacia', time: timings.Isha }
+                    ];
+                    sunriseTimeStr = timings.Sunrise;
+                    document.getElementById('hijriDate').innerText = hijriDateStr;
+                    document.getElementById('sunriseTime').innerText = sunriseTimeStr;
+                    updatePrayerCard();
+                })
+                .catch(error => {
+                    console.error('Error fetching prayer times:', error);
+                    useFallbackTimes();
+                });
+        }
+
+        function showError(error) {
+            let msg = '';
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    msg = "Përdoruesi nuk e lejoi kërkesën për lokacion.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    msg = "Informacioni i lokacionit nuk është i disponueshëm.";
+                    break;
+                case error.TIMEOUT:
+                    msg = "Kërkesa për lokacion u skadua.";
+                    break;
+            }
+            document.getElementById('locationDisplay').innerHTML = `📍 ${msg}`;
+            useFallbackTimes();
+        }
+
+        function useFallbackTimes() {
+            prayerTimes = [
+                { name: 'Sabah', time: '05:40' },
+                { name: 'Dreka', time: '12:43' },
+                { name: 'Ikindia', time: '15:19' },
+                { name: 'Aksham', time: '17:53' },
+                { name: 'Jacia', time: '19:30' }
+            ];
+            sunriseTimeStr = '06:48';
+            document.getElementById('sunriseTime').innerText = sunriseTimeStr;
+            document.getElementById('hijriDate').innerText = '01 Ramazan 1447';
+            updatePrayerCard();
+        }
+
+        function updatePrayerCard() {
+            if (prayerTimes.length === 0) return;
+            const now = getCurrentMinutes();
+            const prayerMins = prayerTimes.map(p => timeToMinutes(p.time));
+            let nextIndex = prayerMins.findIndex(t => t > now);
+            let timeUntil;
+            if (nextIndex === -1) {
+                nextIndex = 0;
+                timeUntil = (24 * 60 - now) + prayerMins[0];
+            } else {
+                timeUntil = prayerMins[nextIndex] - now;
+            }
+            const nextPrayer = prayerTimes[nextIndex];
+            document.getElementById('nextPrayerText').innerHTML = `${nextPrayer.name} për ${formatDuration(timeUntil)}`;
+
+            const container = document.getElementById('prayerTimesContainer');
+            container.innerHTML = '';
+            prayerTimes.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'prayer-time-item';
+                div.innerHTML = `${p.name}<br><strong>${p.time}</strong>`;
+                container.appendChild(div);
+            });
+        }
+
+        function getCurrentMinutes() {
+            const now = new Date();
+            return now.getHours() * 60 + now.getMinutes();
+        }
+
+        function timeToMinutes(timeStr) {
+            const [h, m] = timeStr.split(':').map(Number);
+            return h * 60 + m;
+        }
+
+        function formatDuration(min) {
+            const h = Math.floor(min / 60);
+            const m = min % 60;
+            return `${h}h ${m}m`;
+        }
+    </script>
+</body>
+</html>
